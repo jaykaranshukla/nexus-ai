@@ -11,10 +11,9 @@ app = FastAPI(title="Nexus RAG API")
 
 # --- CORS --- allow your Vercel frontend + local dev
 origins = [
-    "http://localhost:5173",          # Vite dev
-    "http://localhost:3000",
-    "https://chatbot-five-ecru-57.vercel.app",  # your live Vercel URL
-    "*",                              # remove this in production
+    "http://localhost:5173",
+    "https://your-actual-vercel-url.vercel.app",
+    "*",
 ]
 
 app.add_middleware(
