@@ -1,18 +1,18 @@
 # ✨ Nexus AI
 
-A full-stack **Retrieval-Augmented Generation (RAG)** chatbot that answers questions strictly from your uploaded documents. Built with a **React 19 + Vite** frontend and a **FastAPI** backend, powered by **Google Gemini**, **LangChain**, and **ChromaDB**.
+A full-stack **Retrieval-Augmented Generation (RAG)** chatbot that answers questions strictly from your uploaded documents. Built with a **React 19 + Vite** frontend and a **FastAPI** backend, powered by **Google Gemini**, **LangChain**, and **ChromaDB Cloud**.
 
-🔗 **Live Demo:** [YOUR_VERCEL_URL](https://YOUR_VERCEL_URL)
-🔗 **Backend API:** [YOUR_RENDER_URL](https://YOUR_RENDER_URL)
+🔗 **Live Demo:** [frontend-bay-three-11.vercel.app](https://frontend-bay-three-11.vercel.app/)
+🔗 **Backend API:** [nexus-ai-8xeo.onrender.com](https://nexus-ai-8xeo.onrender.com)
 
 ---
 
 ## 🧠 How It Works
 
 1. **Upload** a PDF document via the API
-2. The document is **split into chunks** and **embedded** using HuggingFace sentence transformers
-3. Embeddings are **stored in ChromaDB** (vector database)
-4. When you ask a question, the system **retrieves the most relevant chunks**
+2. The document is **split into chunks** and **embedded** using Google's Gemini embedding model
+3. Embeddings are **stored in ChromaDB Cloud** (persistent vector database)
+4. When you ask a question, the system **retrieves the most relevant chunks** via similarity search
 5. **Google Gemini** generates an answer strictly based on the retrieved context
 
 ---
@@ -25,7 +25,6 @@ chatbot-main/
 │   ├── core_logic.py         # Ingestion, retrieval & generation logic
 │   ├── main.py               # FastAPI server, CORS & API endpoints
 │   ├── requirements.txt      # Python dependencies
-│   ├── database/             # Persistent ChromaDB vector store
 │   └── .env                  # API keys (not committed)
 └── frontend/                 # React + Vite chat interface
     ├── src/
@@ -42,15 +41,15 @@ chatbot-main/
 ## 🛠️ Tech Stack
 
 | Layer            | Technology                              | Version  |
-|------------------|-----------------------------------------|----------|
+|------------------|------------------------------------------|----------|
 | Frontend         | React                                   | v19      |
 | Build Tool       | Vite                                    | v7       |
 | Styling          | Tailwind CSS                            | v4       |
 | Backend          | FastAPI                                 | v0.111   |
-| AI Orchestration | LangChain                               | v0.2     |
-| LLM              | Google Gemini 2.0 Flash                 | —        |
-| Embeddings       | HuggingFace all-mpnet-base-v2           | —        |
-| Vector Database  | ChromaDB                                | v0.5     |
+| AI Orchestration | LangChain                               | v0.3     |
+| LLM              | Google Gemini                           | —        |
+| Embeddings       | Google Gemini Embeddings                | —        |
+| Vector Database  | ChromaDB Cloud                          | v1.1     |
 | Deployment       | Vercel (frontend) + Render (backend)    | —        |
 
 ---
@@ -62,14 +61,15 @@ chatbot-main/
 - **Node.js** v18 or higher
 - **Python** v3.10 or higher
 - **Google Gemini API Key** — get one at [aistudio.google.com](https://aistudio.google.com/app/apikey)
+- **ChromaDB Cloud account** — get one at [trychroma.com](https://www.trychroma.com/)
 
 ---
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-cd chatbot-main
+git clone https://github.com/jaykaranshukla/nexus-ai.git
+cd nexus-ai
 ```
 
 ---
@@ -86,14 +86,16 @@ source venv/bin/activate     # Mac/Linux
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Set up environment variables
 ```
 
 Create a `.env` file inside `backend/`:
 
 ```env
 GOOGLE_API_KEY=your_google_gemini_api_key_here
+CHROMA_HOST=api.trychroma.com
+CHROMA_API_KEY=your_chromadb_cloud_api_key
+CHROMA_TENANT=your_chromadb_tenant_id
+CHROMA_DATABASE=your_chromadb_database_name
 ```
 
 Start the backend server:
@@ -121,9 +123,9 @@ Frontend runs at `http://localhost:5173`
 
 ### 4. Upload a Document & Chat
 
-1. Go to `YOUR_BACKEND_URL/docs`
+1. Go to `https://nexus-ai-8xeo.onrender.com/docs`
 2. Use the `/upload` endpoint to upload a PDF
-3. Open the frontend and ask questions about your document
+3. Open the [live app](https://frontend-bay-three-11.vercel.app/) and ask questions about your document
 
 ---
 
@@ -133,7 +135,7 @@ Frontend runs at `http://localhost:5173`
 |--------|-----------|------------------------------------|
 | GET    | `/`       | Health check                       |
 | POST   | `/chat`   | Send a message, get RAG response   |
-| POST   | `/upload` | Upload a PDF to ingest into ChromaDB |
+| POST   | `/upload` | Upload a PDF to ingest into ChromaDB Cloud |
 
 ---
 
@@ -178,7 +180,13 @@ npm run preview
 2. Connect your GitHub repo, set root directory to `backend`
 3. Build command: `pip install -r requirements.txt`
 4. Start command: `python -m uvicorn main:app --host 0.0.0.0 --port 10000`
-5. Add `GOOGLE_API_KEY` under **Environment Variables**
+5. Add these under **Environment Variables**:
+   - `GOOGLE_API_KEY`
+   - `CHROMA_HOST`
+   - `CHROMA_API_KEY`
+   - `CHROMA_TENANT`
+   - `CHROMA_DATABASE`
+   - `PYTHON_VERSION` = `3.11.9`
 
 ---
 
