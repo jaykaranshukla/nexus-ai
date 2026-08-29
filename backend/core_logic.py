@@ -1,9 +1,11 @@
 import os
 from dotenv import load_dotenv
+import chromadb
+from chromadb.config import Settings
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_chroma import Chroma
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -16,17 +18,26 @@ CHROMA_TENANT  = os.getenv("CHROMA_TENANT", "default_tenant")
 CHROMA_DATABASE = os.getenv("CHROMA_DATABASE", "default_database")
 
 # --- Embeddings ---
-embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
+embeddings = GoogleGenerativeAIEmbeddings(
+    model="models/embedding-001",
+    google_api_key=GOOGLE_API_KEY
 )
 
+
 # --- Vector Store (local persistent — swap for Cloud client if needed) ---
-CHROMA_PATH = "./database"
+
+chroma_client = chromadb.HttpClient(
+    ssl=True,
+    host=os.getenv("CHROMA_HOST"),
+    tenant=os.getenv("CHROMA_TENANT"),
+    database=os.getenv("CHROMA_DATABASE"),
+    headers={"x-chroma-token": os.getenv("CHROMA_API_KEY")}
+)
 
 vectorstore = Chroma(
+    client=chroma_client,
     collection_name="rag_collection",
     embedding_function=embeddings,
-    persist_directory=CHROMA_PATH,
 )
 
 # --- LLM ---
