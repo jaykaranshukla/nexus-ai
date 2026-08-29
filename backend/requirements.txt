@@ -5,14 +5,13 @@ pydantic==2.7.1
 python-dotenv==1.0.1
 
 # LangChain
-langchain==0.3.25
-langchain-community==0.3.24
-langchain-chroma==0.2.6
-langchain-google-genai==2.1.4
-langchain-text-splitters==0.3.8
+langchain
+langchain-community
+langchain-google-genai
+langchain-text-splitters
 
-# ChromaDB Cloud
-chromadb-client==1.0.0
+# ChromaDB Cloud (raw client, no langchain-chroma wrapper — avoids version conflicts)
+chromadb==0.5.23
 
 # Other
 pypdf==4.2.0
