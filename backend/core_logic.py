@@ -17,7 +17,7 @@ CHROMA_DATABASE = os.getenv("CHROMA_DATABASE", "default_database")
 
 # --- Embeddings ---
 embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-mpnet-base-v2"
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
 # --- Vector Store (local persistent — swap for Cloud client if needed) ---
