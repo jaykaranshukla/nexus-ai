@@ -17,7 +17,7 @@ CHROMA_DATABASE = os.getenv("CHROMA_DATABASE", "default_database")
 
 # --- Embeddings (Google, no local model — keeps memory usage low) ---
 embeddings = GoogleGenerativeAIEmbeddings(
-    model="models/embedding-001",
+    model="models/gemini-embedding-001",
     google_api_key=GOOGLE_API_KEY,
 )
 
