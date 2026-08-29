@@ -21,13 +21,11 @@ embeddings = GoogleGenerativeAIEmbeddings(
     google_api_key=GOOGLE_API_KEY,
 )
 
-# --- ChromaDB Cloud client (raw client — no langchain-chroma wrapper) ---
-chroma_client = chromadb.HttpClient(
-    host=CHROMA_HOST,
-    ssl=True,
+# --- ChromaDB Cloud client (official CloudClient — matches server protocol) ---
+chroma_client = chromadb.CloudClient(
     tenant=CHROMA_TENANT,
     database=CHROMA_DATABASE,
-    headers={"x-chroma-token": CHROMA_API_KEY},
+    api_key=CHROMA_API_KEY,
 )
 
 collection = chroma_client.get_or_create_collection(name="rag_collection")
