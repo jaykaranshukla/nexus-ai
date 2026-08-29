@@ -32,7 +32,7 @@ collection = chroma_client.get_or_create_collection(name="rag_collection")
 
 # --- LLM ---
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.0-flash",
+    model="gemini-3.6-flash",
     google_api_key=GOOGLE_API_KEY,
     temperature=0.3,
     convert_system_message_to_human=True,
