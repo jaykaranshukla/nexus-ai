@@ -3,7 +3,7 @@ import { Footer } from "./Components/Footer";
 import { Navbar } from "./Components/Navbar";
 import { Body } from "./Components/Body";
 
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://nexus-ai-8xeo.onrender.com";
 
 function App() {
   const [messages, setMessages] = useState([]);
