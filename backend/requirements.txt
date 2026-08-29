@@ -12,6 +12,7 @@ langchain-chroma==0.1.2
 langchain-google-genai==1.0.7
 
 # AI / ML
+numpy==2.1.0
 sentence-transformers==3.0.1
 chromadb==0.5.3
 pypdf==4.2.0
